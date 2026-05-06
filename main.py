@@ -34,7 +34,7 @@ def save_for_arduino():
         messagebox.showwarning("Atenție", "Nu ai desenat nimic.")
         return
 
-    with open("traiectorie_arduino.h", "w") as f:
+    with open("traiectorie_gui/traiectorie_arduino.h", "w") as f:
         f.write("float traseu[][2] = {\n")
         for x_cm, y_cm in puncte_vect:
             f.write(f"  {{{x_cm*px_to_cm}, {(-y_cm+height)*px_to_cm}}},\n")
@@ -47,7 +47,7 @@ def save_for_arduino():
 def clear_canvas():
     canvas.delete("all")
     puncte_vect.clear()
-    print("Canvas golit.")
+
     draw_grid(canvas, width, height)
     draw_axes(canvas, width, height)
 
@@ -58,14 +58,14 @@ def draw_grid(canvas, width, height, grid_spacing=20):
         canvas.create_line(x, 0, x, height, fill="#ddd")
         x_val = x
         if x_val % 50 == 0:
-            canvas.create_text(x, height - 15, text=str(x_val), anchor="n", fill="blue", font=("Arial", 8))
+            canvas.create_text(x, height - 15, text=str(x_val/10), anchor="n", fill="blue", font=("Arial", 8))
 
     # Draw horizontal grid lines and y-axis labels
     for y in range(0, height, grid_spacing):
         canvas.create_line(0, y, width, y, fill="#ddd")
         y_val = height - y
         if y_val % 50 == 0:
-            canvas.create_text( 10, y, text=str(y_val), anchor="w", fill="red", font=("Arial", 8))
+            canvas.create_text( 10, y, text=str(y_val/10), anchor="w", fill="red", font=("Arial", 8))
 
 def draw_axes(canvas, width, height):
     # Draw X and Y axes in the middle
